@@ -115,3 +115,11 @@ CI runs the suite on Python 3.9 / 3.11 / 3.13.
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+## Use with Claude Code
+
+This repo ships a Claude Code skill at `.claude/skills/braincheck/SKILL.md`.
+Open the repo (or copy that folder into another project's `.claude/skills/`)
+and Claude Code will auto-discover it — teaching the agent when to reach for
+`braincheck`, how to read its finding codes, when to fix files vs. edit the
+schema, and what `--fix` will and won't touch.
