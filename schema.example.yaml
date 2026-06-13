@@ -1,0 +1,254 @@
+# braincheck schema — the type system for a Markdown knowledge base.
+#
+# Every Markdown file is a typed document: its YAML frontmatter must conform
+# to this schema (base fields + per-`type` fields), the same way code must
+# conform to its type declarations.
+#
+# Field specs: string, date, slug, url, list, string-list, bool, number, any,
+#              enum:value1|value2|value3
+#
+# Every document needs the base required fields. Each `type` then adds its own
+# required/optional fields. Keys not listed anywhere produce warnings (W202).
+
+version: 1
+
+# Used by --fix when scaffolding frontmatter onto a file that has none.
+default_type: note
+
+# Infrastructure / non-knowledge paths. Never checked.
+exclude:
+  - .obsidian
+  - .git
+  - .trash
+  - node_modules
+  - graphify-out
+  - tools
+  - .agents
+  - .claude
+  - Excalidraw
+  - _templates       # Templater placeholders like {{date}} are not real values
+  - _snapshots       # frozen archive copies, not live knowledge
+
+base:
+  required:
+    type: string
+    created: date
+    updated: date
+  optional:
+    slug: slug
+    tags: string-list
+    aliases: string-list
+    status: string
+    description: string
+    title: string
+    name: string
+    area: string
+    source: string
+    subtype: string
+    date: date
+    up: any
+    related: any
+    purpose: string
+    supersedes: string
+    superseded_by: string
+    allowed-tools: any
+    disable-model-invocation: bool
+
+types:
+  concept:
+    required:
+      slug: slug
+      tags: string-list
+      aliases: string-list
+
+  content:
+    required:
+      slug: slug
+    optional:
+      platform: string
+      project: string
+      published_url: url
+      campaign: string
+      format: string
+      scheduled_for: string   # often includes time + TZ, e.g. "2026-06-10 07:00 MT"
+      planned_date: date
+      week: any
+      content_pillar: string
+      media_required: any
+      cadence: string
+      slot: string
+      author: string
+      honesty_audit: string
+      voice_check: string
+      revision_notes: any
+      why_jeff_says_this: string
+      image_source: string
+
+  index:
+    optional:
+      version: any
+      in: string
+
+  doc:
+    required:
+      slug: slug
+    optional:
+      project: string
+      companion_files: any
+
+  prompt:
+    required:
+      slug: slug
+      tags: string-list
+    optional:
+      for: string
+      article_slug: string
+      disable-model-invocation: bool
+
+  review:
+    optional:
+      period: string
+      sections: any
+      reviewer: string
+      kind: string
+
+  project:
+    required:
+      slug: slug
+      tags: string-list
+    optional:
+      owner: string
+      stage: string
+      stack: any
+      channel: string
+      cadence: string
+
+  post-draft:
+    required:
+      platform: string
+      project: string
+      status: string
+      date: date
+    optional:
+      why_jeff_says_this: string
+      revision_notes: any
+      target_length: any
+      honesty_audit: string
+      voice_check: string
+
+  idea:
+    required:
+      slug: slug
+      tags: string-list
+
+  memory:
+    required:
+      slug: slug
+      area: string
+      tags: string-list
+
+  company:
+    required:
+      slug: slug
+      tags: string-list
+    optional:
+      website: url
+      relationship: string
+      product: string
+      products: any
+
+  skill:
+    required:
+      slug: slug
+
+  person:
+    required:
+      slug: slug
+      tags: string-list
+      relationship: string
+      last_contact: date
+      cadence: string
+      status: string
+    optional:
+      role: string
+      email: string
+
+  dashboard: {}
+
+  editorial-submission:
+    required:
+      target: string
+      submission_form: string
+      status: string
+      date: date
+      author: string
+    optional:
+      voice_check: string
+      em_dash_count: number
+      honesty_audit: string
+      guardrails: any
+
+  note:
+    required:
+      slug: slug
+    optional:
+      project: string
+      from_session: string
+      for_next_session: any
+
+  appointment:
+    required:
+      slug: slug
+      date: date
+      provider: string
+      specialty: string
+      status: string
+      tags: string-list
+    optional:
+      priority: string
+      needs_transport: bool
+
+  sop:
+    optional:
+      applies_to: any
+      companion_files: any
+
+  moderation:
+    required:
+      slug: slug
+      project: string
+      purpose: string
+      status: string
+
+  article-draft:
+    required:
+      pass: any
+      piece: string
+      status: string
+      target_ship: date
+      slug: slug
+    optional:
+      canonical: string
+      angle: string
+
+  article-outline:
+    required:
+      pass: any
+      piece: string
+      status: string
+      target_ship: date
+    optional:
+      pillars: any
+      angle: string
+      guardrails: any
+
+  health-provider:
+    required:
+      slug: slug
+      specialty: string
+      provider_name: string
+      clinic: string
+      phone: string
+      tags: string-list
+    optional:
+      location: string

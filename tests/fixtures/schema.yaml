@@ -1,0 +1,21 @@
+version: 1
+default_type: note
+exclude: []
+base:
+  required:
+    type: string
+    created: date
+    updated: date
+  optional:
+    slug: slug
+    tags: string-list
+    aliases: string-list
+types:
+  concept:
+    required:
+      slug: slug
+      tags: string-list
+      aliases: string-list
+  note:
+    required:
+      slug: slug

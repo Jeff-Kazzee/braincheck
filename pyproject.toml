@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "braincheck"
+version = "0.1.0"
+description = "A typechecker for Markdown knowledge bases — enforce one schema across all YAML frontmatter."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+authors = [{ name = "Jeff Kazzee" }]
+keywords = ["markdown", "frontmatter", "yaml", "linter", "obsidian", "knowledge-base"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Text Processing :: Markup :: Markdown",
+  "Topic :: Software Development :: Quality Assurance",
+]
+dependencies = []   # zero runtime dependencies, by design
+
+[project.urls]
+Homepage = "https://github.com/Jeff-Kazzee/braincheck"
+Issues = "https://github.com/Jeff-Kazzee/braincheck/issues"
+
+[project.scripts]
+braincheck = "braincheck:main"
+
+[tool.setuptools]
+py-modules = ["braincheck"]
